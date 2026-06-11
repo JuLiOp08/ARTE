@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Experimento artístico sobre la adicción a redes sociales y el consumo infinito de contenido">
+    <meta name="theme-color" content="#000000">
+    <title>Sigue Deslizando - Experimento Artístico</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body role="main">
+
+    <div class="header" aria-label="Encabezado">
+        <span aria-live="polite">Para ti</span>
+    </div>
+
+    <div id="counter" aria-label="Contador de contenido pendiente" role="status" aria-live="polite">
+        <span id="counterValue" aria-atomic="true">50</span>
+    </div>
+
+    <div id="intro" role="region" aria-label="Pantalla de introducción">
+        <h1>Desliza hacia arriba para empezar a ver</h1>
+        <div class="phone-container">
+            <i class="fas fa-mobile-screen-button phone-icon" aria-hidden="true"></i>
+            <div class="swipe-indicator" aria-hidden="true">↑</div>
+        </div>
+    </div>
+    
+    <div id="feed" role="region" aria-label="Feed de contenido" aria-live="polite" aria-busy="false"></div>
+
+    <nav class="bottom-nav" aria-label="Navegación principal">
+
+        <button aria-label="Inicio" title="Ir al inicio">
+            <i class="fas fa-house"></i>
+        </button>
+
+        <button aria-label="Explorar" title="Explorar contenido">
+            <i class="fas fa-magnifying-glass"></i>
+        </button>
+
+        <button aria-label="Crear" title="Crear contenido">
+            <i class="fas fa-plus"></i>
+        </button>
+
+        <button aria-label="Mensajes" title="Ver mensajes">
+            <i class="fas fa-envelope"></i>
+        </button>
+
+        <button aria-label="Perfil" title="Ver perfil">
+            <i class="fas fa-user"></i>
+        </button>
+
+    </nav>
+
+    <script src="script.js"></script>
+
+</body>
+</html>

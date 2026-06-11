@@ -1,0 +1,486 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-snap-type:y mandatory;
+}
+
+body{
+    background:black;
+    overflow-y:scroll;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color:white;
+    transition: filter 0.3s ease;
+}
+
+body.dark-mode {
+    filter: invert(1) hue-rotate(180deg);
+}
+
+::-webkit-scrollbar{
+    display:none;
+}
+
+/* ===== HEADER ===== */
+
+.header{
+    display:none;
+    position:fixed;
+    top:15px;
+    width:100%;
+    text-align:center;
+    z-index:1000;
+    color:rgba(255,255,255,.7);
+    font-weight:bold;
+    font-size:1.2rem;
+    animation: headerSlideDown 0.5s ease;
+}
+
+@keyframes headerSlideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ===== CONTADOR PRINCIPAL ===== */
+
+#counter{
+    display:none;
+    position:fixed;
+    top:38%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    z-index:1000;
+    font-size:6rem;
+    font-weight:900;
+    color:white;
+    text-shadow: 0 0 30px rgba(255, 0, 80, 0.5);
+    animation: counterAppear 0.6s ease;
+    letter-spacing: 2px;
+}
+
+@keyframes counterAppear {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.5);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+/* Pulso cuando aumenta */
+#counter.pulse-up {
+    animation: pulseUp 0.6s cubic-bezier(0.36, 0, 0.66, -0.56);
+}
+
+@keyframes pulseUp {
+    0% {
+        transform: translate(-50%, -50%) scale(1);
+        color: white;
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(1.3);
+        color: #00ff00;
+        text-shadow: 0 0 50px rgba(0, 255, 0, 0.8);
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(1);
+        color: white;
+    }
+}
+
+/* Pulso cuando disminuye */
+#counter.pulse-down {
+    animation: pulseDown 0.5s ease;
+}
+
+@keyframes pulseDown {
+    0% {
+        transform: translate(-50%, -50%) scale(1);
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(0.9);
+        color: #ff6b6b;
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(1);
+        color: white;
+    }
+}
+
+/* Estado crítico - contador bajo */
+#counter.counter-critical {
+    color: #ff0050;
+    text-shadow: 
+        0 0 10px rgba(255, 0, 80, 0.8),
+        0 0 20px rgba(255, 0, 80, 0.5),
+        0 0 30px rgba(255, 0, 80, 0.3);
+    animation: criticalPulse 0.4s infinite;
+}
+
+@keyframes criticalPulse {
+    0%, 100% {
+        opacity: 1;
+        text-shadow: 
+            0 0 10px rgba(255, 0, 80, 0.8),
+            0 0 20px rgba(255, 0, 80, 0.5),
+            0 0 30px rgba(255, 0, 80, 0.3);
+    }
+    50% {
+        opacity: 0.7;
+        text-shadow: 
+            0 0 20px rgba(255, 0, 80, 1),
+            0 0 40px rgba(255, 0, 80, 0.8);
+    }
+}
+
+/* Zero Counter - Efecto especial */
+#counter.counter-zero {
+    animation: counterZero 1s ease;
+}
+
+@keyframes counterZero {
+    0% {
+        transform: translate(-50%, -50%) scale(1);
+        color: white;
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(1.5);
+        color: #ff0050;
+        text-shadow: 
+            0 0 30px rgba(255, 0, 80, 1),
+            0 0 60px rgba(255, 0, 80, 0.8);
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(1);
+        color: #ffff00;
+        text-shadow: 
+            0 0 30px rgba(255, 255, 0, 0.8),
+            0 0 60px rgba(255, 0, 80, 0.5);
+    }
+}
+
+/* Lucky number 999 */
+#counter.counter-lucky {
+    animation: lucky 0.6s ease;
+}
+
+@keyframes lucky {
+    0%, 100% {
+        transform: translate(-50%, -50%) rotate(0deg) scale(1);
+    }
+    25% {
+        transform: translate(-50%, -50%) rotate(5deg) scale(1.1);
+        color: #ffff00;
+    }
+    50% {
+        transform: translate(-50%, -50%) rotate(-5deg) scale(1.1);
+        color: #ff6b00;
+    }
+    75% {
+        transform: translate(-50%, -50%) rotate(5deg) scale(1.1);
+        color: #00ff00;
+    }
+}
+
+/* ===== NOTIFICACIÓN DEL CONTADOR ===== */
+
+.counter-notification {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.9);
+    color: #00ff00;
+    padding: 15px 30px;
+    border-radius: 50px;
+    border: 2px solid #00ff00;
+    font-weight: bold;
+    z-index: 999;
+    animation: notificationPopup 2s ease forwards;
+    font-size: 1rem;
+    box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
+}
+
+@keyframes notificationPopup {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.5);
+    }
+    10%, 90% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.5);
+    }
+}
+
+/* ===== FEED Y TARJETAS ===== */
+
+#feed{
+    width:100%;
+}
+
+.card{
+    width:100%;
+    height:100vh;
+    scroll-snap-align:start;
+    position:relative;
+    overflow: hidden;
+    transition: filter 0.3s ease;
+}
+
+.card:hover {
+    filter: brightness(1.1);
+}
+
+.card-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, transparent 0%, rgba(0,0,0,0.1) 100%);
+    pointer-events: none;
+}
+
+/* ===== ACCIONES DERECHA ===== */
+
+.right-actions{
+    position:absolute;
+    right:15px;
+    bottom:120px;
+    display:flex;
+    flex-direction:column;
+    gap:30px;
+    align-items:center;
+    z-index: 100;
+}
+
+.right-actions i{
+    font-size:2rem;
+    color:white;
+    transition: all 0.2s ease;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+}
+
+.action {
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.action:hover .action-icon {
+    transform: scale(1.2);
+}
+
+.action-icon.action-clicked {
+    animation: actionClick 0.3s ease;
+}
+
+@keyframes actionClick {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.3);
+        color: #ff0050;
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.action span{
+    margin-top:5px;
+    font-size:0.75rem;
+    font-weight:bold;
+    text-shadow: 0 1px 2px rgba(12, 12, 12, 0.5);
+    transition: all 0.2s ease;
+}
+
+.action:hover span {
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+}
+
+/* ===== NAVEGACIÓN INFERIOR ===== */
+
+.bottom-nav{
+    position:fixed;
+    bottom:0;
+    width:100%;
+    height:65px;
+    background:linear-gradient(to top, black, rgba(0,0,0,0.8));
+    display:flex;
+    justify-content:space-around;
+    align-items:center;
+    border-top:1px solid rgba(255,255,255,.15);
+    z-index:1000;
+}
+
+.bottom-nav i{
+    color:rgb(0, 0, 0);
+    font-size:1.4rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.bottom-nav i:hover {
+    color: #00ff00;
+    transform: scale(1.2);
+    text-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+}
+
+/* ===== PANTALLA DE INTRODUCCIÓN ===== */
+
+#intro{
+    width:100%;
+    height:100vh;
+    background:linear-gradient(135deg, #f5f5f5 0%, #e3e3e3 100%);
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    scroll-snap-align:start;
+    position: relative;
+    overflow: hidden;
+}
+
+#intro.hidden {
+    animation: introExit 0.6s ease forwards;
+}
+
+@keyframes introExit {
+    to {
+        opacity: 0;
+        transform: translateY(-100vh);
+        display: none;
+    }
+}
+
+#intro h1{
+    color:#222;
+    font-size:2rem;
+    text-align:center;
+    margin-bottom:50px;
+    max-width:500px;
+    padding:0 20px;
+    animation: slideInDown 0.8s ease;
+}
+
+@keyframes slideInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-40px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.phone-container{
+    position:relative;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    animation: slideInUp 0.8s ease 0.2s backwards;
+}
+
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.phone-icon{
+    font-size:14rem;
+    color:#666;
+    filter: drop-shadow(0 10px 30px rgba(0,0,0,0.2));
+}
+
+.swipe-indicator{
+    position:absolute;
+    bottom:-20px;
+    font-size:3rem;
+    color:#222;
+    animation:swipe 1.2s infinite;
+}
+
+@keyframes swipe{
+    0%{
+        transform:translateY(0);
+        opacity:0.4;
+    }
+    50%{
+        transform:translateY(-20px);
+        opacity:1;
+    }
+    100%{
+        transform:translateY(0);
+        opacity:0.4;
+    }
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+
+@media (max-width: 768px) {
+    #counter {
+        font-size: 4rem;
+    }
+    
+    .right-actions {
+        right: 10px;
+        bottom: 100px;
+        gap: 25px;
+    }
+    
+    .right-actions i {
+        font-size: 1.5rem;
+    }
+    
+    .action span {
+        font-size: 0.65rem;
+    }
+}
+
+@media (max-width: 480px) {
+    #counter {
+        font-size: 3rem;
+    }
+    
+    .header {
+        font-size: 1rem;
+    }
+    
+    #intro h1 {
+        font-size: 1.5rem;
+    }
+    
+    .phone-icon {
+        font-size: 8rem;
+    }
+    
+    .swipe-indicator {
+        font-size: 2rem;
+    }
+}
