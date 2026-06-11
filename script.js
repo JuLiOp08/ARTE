@@ -15,9 +15,6 @@ const colors = [
 
 // Variables de estado global
 let counter = 500;
-let currentSection = 0;
-let cardsInDOM = 200;
-const MAX_CARDS_DOM = 50; // Virtualización
 
 const counterElement = document.getElementById("counterValue");
 const counterContainer = document.getElementById("counter");
@@ -70,7 +67,6 @@ function generateCards(amount){
         `;
 
         feed.appendChild(card);
-        cardsInDOM++;
     }
 }
 
@@ -85,7 +81,7 @@ function updateCounter(delta) {
     
     // Feedback visual
     if(delta > 0) {
-        pulseCounter("up", delta);
+        pulseCounter("up");
         showCounterNotification(`+${delta} contenido disponible`);
     } else if(delta < 0) {
         pulseCounter("down");
@@ -101,7 +97,7 @@ function updateCounter(delta) {
     }
 }
 
-function pulseCounter(direction, amount = 1) {
+function pulseCounter(direction) {
     counterContainer.classList.remove("pulse-up", "pulse-down");
     void counterContainer.offsetWidth; // Trigger reflow
     counterContainer.classList.add(`pulse-${direction}`);
@@ -199,14 +195,16 @@ setInterval(() => {
 // ===== CONTADOR DE TIEMPO TRANSCURRIDO =====
 
 let elapsedSeconds = 0;
+let lastTimeNotification = 0;
 
 setInterval(() => {
     elapsedSeconds++;
     const minutes = Math.floor(elapsedSeconds / 60);
     
-    // Recordar psicológicamente cuánto tiempo has pasado aquí
-    if(counter > 0 && minutes > 0 && minutes % 5 === 0 && elapsedSeconds % 300 === 0) {
+    // Mostrar notificación cada 5 minutos
+    if(counter > 0 && minutes > 0 && minutes % 5 === 0 && minutes > lastTimeNotification) {
         showCounterNotification(`⏱️ Llevas ${minutes} minutos aquí`);
+        lastTimeNotification = minutes;
     }
 }, 1000);
 
@@ -248,24 +246,7 @@ document.addEventListener("click", (e) => {
     }, 300);
 });
 
-// ===== EASTER EGGS =====
 
-// Números especiales disparan efectos
-const observer = new MutationObserver(() => {
-    const counterValue = parseInt(counterElement.textContent);
-    
-    if(counterValue === 999) {
-        counterContainer.classList.add("counter-lucky");
-        setTimeout(() => counterContainer.classList.remove("counter-lucky"), 2000);
-    }
-    
-    if(counterValue === 666) {
-        document.body.style.filter = "hue-rotate(10deg) saturate(1.5)";
-        setTimeout(() => {
-            document.body.style.filter = "none";
-        }, 1000);
-    }
-});
 
 observer.observe(counterElement, { 
     characterData: true, 
