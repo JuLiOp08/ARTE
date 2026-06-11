@@ -14,7 +14,7 @@ const colors = [
 ];
 
 // Variables de estado global
-let counter = 50;
+let counter = 500;
 let currentSection = 0;
 let cardsInDOM = 200;
 const MAX_CARDS_DOM = 50; // Virtualización
@@ -177,18 +177,18 @@ window.addEventListener("scroll", () => {
 
 setInterval(() => {
     const random = Math.random();
-    let increase = 0;
+    let increase = 5;
     
     if(random < 0.50) {
-        increase = 5;
-    } else if(random < 0.80) {
-        increase = 6;
-    } else if(random < 0.90) {
         increase = 7;
+    } else if(random < 0.80) {
+        increase = 10;
+    } else if(random < 0.90) {
+        increase = 15;
     } else if(random < 0.95) {
-        increase = 8;
+        increase = 20;
     } else {
-        increase =20;
+        increase =30;
     }
     
     if(increase > 0) {
