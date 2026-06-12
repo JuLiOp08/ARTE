@@ -245,11 +245,3 @@ document.addEventListener("click", (e) => {
         icon.classList.remove("action-clicked");
     }, 300);
 });
-
-
-
-observer.observe(counterElement, { 
-    characterData: true, 
-    subtree: true,
-    childList: true
-});

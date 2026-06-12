@@ -5,7 +5,8 @@
 }
 
 html{
-    scroll-snap-type:y mandatory;
+    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
 }
 
 body{
@@ -253,6 +254,7 @@ body.dark-mode {
     scroll-snap-align:start;
     position:relative;
     overflow: hidden;
+    scroll-snap-stop: always;
     transition: filter 0.3s ease;
 }
 
@@ -370,6 +372,7 @@ body.dark-mode {
     justify-content:center;
     align-items:center;
     scroll-snap-align:start;
+    scroll-snap-stop: always;
     position: relative;
     overflow: hidden;
 }
